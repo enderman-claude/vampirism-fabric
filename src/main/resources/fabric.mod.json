@@ -9,6 +9,7 @@
     "sources": "https://github.com/enderman-claude/vampirism-fabric",
     "issues": "https://github.com/TeamLapen/Vampirism/issues"
   },
+  "icon": "assets/vampirism/icon.png",
   "license": "LGPL-3.0",
   "environment": "*",
   "entrypoints": {
