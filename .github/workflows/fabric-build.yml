@@ -14,27 +14,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
+        id: build
+        continue-on-error: true
         shell: bash
         run: |
           set -o pipefail
-          ./gradlew build --no-daemon 2>&1 | tee build.log
-      - name: Save build log to repo (readable without Actions log access)
+          ./gradlew build --no-daemon --stacktrace 2>&1 | tee build.log
+      - name: Save build log to repo
         if: always()
         shell: bash
         run: |
+          set +e
           mkdir -p ci
-          tail -c 300000 build.log > ci/last-build.log 2>/dev/null || echo "no log" > ci/last-build.log
+          if [ -f build.log ]; then tail -c 300000 build.log > ci/last-build.log; else echo "no build.log produced" > ci/last-build.log; fi
+          echo "build outcome: ${{ steps.build.outcome }}" >> ci/last-build.log
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add ci/last-build.log
-          git commit -m "ci: build log [skip ci]" || exit 0
-          git push origin HEAD:${GITHUB_REF_NAME} || true
+          git commit -q -m "ci: build log for ${GITHUB_SHA:0:8} (build outcome: ${{ steps.build.outcome }})" -m "[skip ci]"
+          git push origin HEAD:refs/heads/${GITHUB_REF_NAME} 2>&1 | tail -5
+          exit 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
