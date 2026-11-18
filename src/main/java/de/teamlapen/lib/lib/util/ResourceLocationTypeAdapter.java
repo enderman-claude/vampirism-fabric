@@ -3,19 +3,19 @@ package de.teamlapen.lib.lib.util;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 import java.io.IOException;
 
-public final class ResourceLocationTypeAdapter extends TypeAdapter<ResourceLocation> {
+public final class ResourceLocationTypeAdapter extends TypeAdapter<Identifier> {
 
     @Override
-    public ResourceLocation read(JsonReader in) throws IOException {
-        return new ResourceLocation(in.nextString());
+    public Identifier read(JsonReader in) throws IOException {
+        return new Identifier(in.nextString());
     }
 
     @Override
-    public void write(JsonWriter out, ResourceLocation value) throws IOException {
+    public void write(JsonWriter out, Identifier value) throws IOException {
         if (value == null) {
             out.nullValue();
             return;

@@ -1,6 +1,6 @@
 //package de.teamlapen.lib.lib.inventory;
 //
-//import net.minecraft.inventory.IInventory;
+//import net.minecraft.inventory.Inventory;
 //import net.minecraft.item.Item;
 //import net.minecraft.item.ItemStack;
 //import net.minecraft.util.NonNullList;
@@ -42,13 +42,13 @@
 //         * @param item
 //         * @return whether the item is allowed or not
 //         */
-//        boolean isItemAllowed(@Nonnull ItemStack item);
+//        boolean isItemAllowed(ItemStack item);
 //    }
 //
 //    /**
 //     * Interface for accessing the inventory slots of tiles
 //     */
-//    public interface IInventorySlotInventory extends IInventory {
+//    public interface IInventorySlotInventory extends Inventory {
 //        NonNullList<InventorySlot> getSlots();
 //
 //        InventorySlot getSlot(int index);

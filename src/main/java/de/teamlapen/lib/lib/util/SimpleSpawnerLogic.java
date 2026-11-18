@@ -1,18 +1,16 @@
 package de.teamlapen.lib.lib.util;
 
 import net.minecraft.entity.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraft.world.spawner.WorldEntitySpawner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.function.Consumer;
 
@@ -24,14 +22,10 @@ public class SimpleSpawnerLogic<T extends Entity> {
     private final static Logger LOGGER = LogManager.getLogger();
     private static final int MOB_COUNT_DIV = (int) Math.pow(17.0D, 2.0D);
 
-    private @Nonnull
-    final EntityType<T> entityType;
-    private @Nullable
-    BlockPos pos;
-    private @Nullable
-    World world;
-    private @Nullable
-    Consumer<T> onSpawned;
+    private final EntityType<T> entityType;
+    private BlockPos pos;
+    private World world;
+    private Consumer<T> onSpawned;
     private int minSpawnDelay = 200;
     private int maxSpawnDelay = 800;
     private int activateRange = 16;
@@ -43,13 +37,12 @@ public class SimpleSpawnerLogic<T extends Entity> {
     private int spawnedToday = 0;
     private long spawnedLast = 0L;
     private boolean flag = true;
-    private EntityClassification limitType;
+    private SpawnGroup limitType;
 
-    public SimpleSpawnerLogic(@Nonnull EntityType<T> entityTypeIn) {
+    public SimpleSpawnerLogic(EntityType<T> entityTypeIn) {
         this.entityType = entityTypeIn;
     }
 
-    @Nonnull
     public EntityType<T> getEntityType() {
         return entityType;
     }
@@ -64,7 +57,7 @@ public class SimpleSpawnerLogic<T extends Entity> {
         return this.world.hasNearbyAlivePlayer(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D, this.activateRange);
     }
 
-    public void readFromNbt(CompoundNBT nbt) {
+    public void readFromNbt(CompoundTag nbt) {
         this.spawnDelay = nbt.getInt("delay");
         this.spawnedToday = nbt.getInt("spawned_today");
         this.spawnedLast = nbt.getLong("spawned_last");
@@ -97,7 +90,7 @@ public class SimpleSpawnerLogic<T extends Entity> {
     /**
      * Checks if any more creatures of the given type are allowed in the world before spawning
      */
-    public SimpleSpawnerLogic<T> setLimitTotalEntities(EntityClassification creatureType) {
+    public SimpleSpawnerLogic<T> setLimitTotalEntities(SpawnGroup creatureType) {
         limitType = creatureType;
         return this;
     }
@@ -137,7 +130,7 @@ public class SimpleSpawnerLogic<T extends Entity> {
         return this;
     }
 
-    public void setWorld(@Nullable World worldIn) {
+    public void setWorld(World worldIn) {
         this.world = worldIn;
     }
 
@@ -180,7 +173,6 @@ public class SimpleSpawnerLogic<T extends Entity> {
                     }
 
                     if (limitType != null) {
-                        @Nullable
                         WorldEntitySpawner.EntityDensityManager densityManager = ((ServerWorld) this.world).getChunkSource().getLastSpawnState();
                         try {
                             if (densityManager != null && !densityManager.canSpawnForCategory(limitType)) {
@@ -208,16 +200,16 @@ public class SimpleSpawnerLogic<T extends Entity> {
         }
     }
 
-    public void writeToNbt(CompoundNBT nbt) {
+    public void writeToNbt(CompoundTag nbt) {
         nbt.putInt("delay", spawnDelay);
         nbt.putInt("spawned_today", spawnedToday);
         nbt.putLong("spawned_last", spawnedLast);
         nbt.putBoolean("spawner_flag", flag);
     }
 
-    protected AxisAlignedBB getSpawningBox() {
-        if (this.pos == null) return AxisAlignedBB.ofSize(0, 0, 0);
-        return (new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), this.pos.getX() + 1, this.pos.getY() + 1, this.pos.getZ() + 1)).inflate(this.spawnRange, this.spawnRange, this.spawnRange);
+    protected Box getSpawningBox() {
+        if (this.pos == null) return Box.ofSize(0, 0, 0);
+        return (new Box(this.pos.getX(), this.pos.getY(), this.pos.getZ(), this.pos.getX() + 1, this.pos.getY() + 1, this.pos.getZ() + 1)).inflate(this.spawnRange, this.spawnRange, this.spawnRange);
 
     }
 
