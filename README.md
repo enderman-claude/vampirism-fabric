@@ -43,3 +43,4 @@ Each milestone needs to be tested in a Fabric dev client by the maintainer befor
 ## Status log
 
 - 2026-11-18: Repository created from the 1.16 branch of upstream. No code changes yet.
+- 2026-11-18: M0 scaffold on the `fabric` branch. Forge sources moved to `legacy/forge-src` (reference only). Loom build, `fabric.mod.json`, and entrypoint added. GitHub Actions `fabric-build` passes (compiles and builds the jar). Not yet launched in a dev client, so M0 is not ticked.
