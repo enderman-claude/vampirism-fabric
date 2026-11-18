@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "vampirism",
+  "version": "${version}",
+  "name": "Vampirism (Fabric port, unofficial)",
+  "description": "Unofficial Fabric port of Vampirism by TeamLapen. Migration 0%. See the original project for the real mod.",
+  "authors": ["Maxanier", "Cheaterpaul"],
+  "contact": {
+    "sources": "https://github.com/enderman-claude/vampirism-fabric",
+    "issues": "https://github.com/TeamLapen/Vampirism/issues"
+  },
+  "license": "LGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["de.teamlapen.vampirism.VampirismFabric"]
+  },
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "minecraft": "~1.16.5",
+    "java": ">=8",
+    "fabric-api": "*"
+  }
+}
