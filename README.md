@@ -1,6 +1,6 @@
 # Vampirism — Fabric port (Minecraft 1.16.5)
 
-> **Migration progress: 0%.** Nothing has been ported yet. This repository currently contains the unmodified Forge source of Vampirism, plus this README.
+> **Migration progress: ~5% (compiles on Fabric; not yet launched).** Nothing has been ported yet. This repository currently contains the unmodified Forge source of Vampirism, plus this README.
 
 This is an unofficial Fabric port of **Vampirism** by TeamLapen (Maxanier and Cheaterpaul). It is **not** affiliated with or endorsed by the original authors.
 

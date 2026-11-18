@@ -3,7 +3,7 @@
   "id": "vampirism",
   "version": "${version}",
   "name": "Vampirism (Fabric port, unofficial)",
-  "description": "Unofficial Fabric port of Vampirism by TeamLapen. Migration 0%. See the original project for the real mod.",
+  "description": "Unofficial Fabric port of Vampirism by TeamLapen. Migration ~5% (compiles; not yet launched). See the original project for the real mod.",
   "authors": ["Maxanier", "Cheaterpaul"],
   "contact": {
     "sources": "https://github.com/enderman-claude/vampirism-fabric",
