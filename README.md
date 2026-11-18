@@ -2,7 +2,7 @@
 
 > **Migration progress: 0%.** Nothing has been ported yet. This repository currently contains the unmodified Forge source of Vampirism, plus this README.
 
-This is an unofficial, personal Fabric port of **Vampirism** by TeamLapen (Maxanier and Cheaterpaul). It is **not** affiliated with or endorsed by the original authors.
+This is an unofficial Fabric port of **Vampirism** by TeamLapen (Maxanier and Cheaterpaul). It is **not** affiliated with or endorsed by the original authors.
 
 ## Original project
 
