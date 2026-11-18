@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +20,21 @@ jobs:
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
-        run: ./gradlew build --no-daemon
+        shell: bash
+        run: |
+          set -o pipefail
+          ./gradlew build --no-daemon 2>&1 | tee build.log
+      - name: Save build log to repo (readable without Actions log access)
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p ci
+          tail -c 300000 build.log > ci/last-build.log 2>/dev/null || echo "no log" > ci/last-build.log
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add ci/last-build.log
+          git commit -m "ci: build log [skip ci]" || exit 0
+          git push origin HEAD:${GITHUB_REF_NAME} || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
