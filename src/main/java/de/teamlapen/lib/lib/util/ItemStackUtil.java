@@ -10,14 +10,14 @@ public class ItemStackUtil {
      * Can be used in {@link Inventory#decrStackSize(int, int)}
      */
     public static ItemStack decrIInventoryStackSize(Inventory inv, int slot, int amt) {
-        ItemStack stack = inv.getItem(slot);
+        ItemStack stack = inv.getStack(slot);
         if (!stack.isEmpty()) {
             if (stack.getCount() <= amt) {
-                inv.setItem(slot, ItemStack.EMPTY);
+                inv.setStack(slot, ItemStack.EMPTY);
             } else {
                 stack = stack.split(amt);
                 if (stack.isEmpty()) {
-                    inv.setItem(slot, ItemStack.EMPTY);
+                    inv.setStack(slot, ItemStack.EMPTY);
                 }
             }
             return stack;
@@ -40,11 +40,11 @@ public class ItemStackUtil {
         if (stackA.isEmpty() && stackB.isEmpty()) return true;
         if (stackA.isEmpty() || stackB.isEmpty()) return false;
         if (stackA.getItem() != stackB.getItem()) return false;
-        if (stackA.getDamageValue() != stackB.getDamageValue()) return false;
-        return ItemStack.tagMatches(stackA, stackB);
+        if (stackA.getDamage() != stackB.getDamage()) return false;
+        return ItemStack.areTagsEqual(stackA, stackB);
     }
 
     public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
-        return stack1.getItem() == stack2.getItem() && ItemStack.tagMatches(stack1, stack2);
+        return stack1.getItem() == stack2.getItem() && ItemStack.areTagsEqual(stack1, stack2);
     }
 }
