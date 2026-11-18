@@ -24,6 +24,14 @@ jobs:
         run: |
           set -o pipefail
           ./gradlew build --no-daemon --stacktrace 2>&1 | tee build.log
+      - name: Dump Yarn class names (for mapping fixes)
+        if: always()
+        shell: bash
+        run: |
+          for j in $(find "$HOME/.gradle/caches/fabric-loom" -name '*.jar' 2>/dev/null); do
+            unzip -l "$j" 2>/dev/null | awk '{print $4}' | grep -E '/(nbt/[A-Za-z]*Compound[A-Za-z]*|[A-Za-z]*Spawner[A-Za-z]*|SpawnHelper|SpawnGroup|[A-Za-z]*Weighted[A-Za-z]*|[A-Za-z]*Weight[A-Za-z]*)\.class$' | sed "s|^|$(basename "$j"): |"
+          done | sort -u | head -80 | while IFS= read -r l; do echo "::notice::$l"; done
+          exit 0
       - name: Report javac errors as annotations
         if: always()
         run: python3 scripts/report-errors.py
