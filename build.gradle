@@ -1,4 +1,4 @@
-// M0 scaffold. Versions below are unverified and will be checked by CI.
+// Fabric port scaffold. Versions verified by CI (Loom 0.7.35, Gradle 7.2, Yarn 1.16.5).
 plugins {
     id 'fabric-loom' version '0.7-SNAPSHOT'
     id 'maven-publish'
@@ -23,10 +23,21 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
+// Commit hash is injected only when built by CI (GITHUB_SHA set). Local builds get no hash, so none is printed.
+def buildCommit = System.getenv('GITHUB_SHA')
+
 processResources {
     inputs.property "version", project.version
     filesMatching("fabric.mod.json") {
         expand "version": project.version
+    }
+    doLast {
+        def out = new File(destinationDir, 'vampirism-build.properties')
+        if (buildCommit) {
+            out.text = "commit=${buildCommit.take(8)}\n"
+        } else {
+            out.delete()
+        }
     }
 }
 
