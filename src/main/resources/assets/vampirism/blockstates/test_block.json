@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "vampirism:block/test_block" }
+  }
+}

@@ -1,5 +1,6 @@
 package de.teamlapen.vampirism;
 
+import de.teamlapen.vampirism.registry.VampirismBlocks;
 import de.teamlapen.vampirism.registry.VampirismItems;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,8 @@ public class VampirismFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         VampirismItems.init();
-        LOGGER.info("Vampirism Fabric port (unofficial, ~6% migrated, not yet fully launched) loaded.");
+        VampirismBlocks.init();
+        LOGGER.info("Vampirism Fabric port (unofficial, ~7% migrated, not yet fully launched) loaded.");
         String commit = readBuildCommit();
         if (commit != null) {
             LOGGER.info("Build commit: {}", commit);

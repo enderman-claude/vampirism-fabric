@@ -1,6 +1,6 @@
 # Vampirism — Fabric port (Minecraft 1.16.5)
 
-> **Migration progress: ~6% (compiles on Fabric; test item registered; not yet launched).** The Fabric scaffold builds in CI and part of the Teamlapen Library compiles on Fabric 1.16.5. Nothing has been launched in a game client yet, and no gameplay content has been ported.
+> **Migration progress: ~7% (compiles on Fabric; test item and test block registered; not yet launched).** The Fabric scaffold builds in CI and part of the Teamlapen Library compiles on Fabric 1.16.5. Nothing has been launched in a game client yet, and no gameplay content has been ported.
 
 This is an unofficial Fabric port of **Vampirism** by TeamLapen (Maxanier and Cheaterpaul). It is **not** affiliated with or endorsed by the original authors.
 
@@ -28,7 +28,7 @@ Each milestone needs to be tested in a Fabric dev client by the maintainer befor
 
 - [ ] **M0 — Scaffold:** Fabric Loom project for 1.16.5, Fabric API as the only dependency, builds and launches with no mod content.
 - [ ] **M1 — Teamlapen Library folded in:** the `src/lib` code moved into the mod, Forge-only parts removed or replaced.
-- [ ] **M2 — Registries and event bus (partial: test item registered):** blocks, items, entities, and effects registered through Fabric; Forge event subscriptions replaced.
+- [ ] **M2 — Registries and event bus (partial: test item and test block registered):** blocks, items, entities, and effects registered through Fabric; Forge event subscriptions replaced.
 - [ ] **M3 — Capabilities:** Forge capabilities replaced with Fabric attachments or a custom equivalent (about 34 files).
 - [ ] **M4 — Networking:** Forge `SimpleChannel` packets replaced with Fabric networking (about 33 files).
 - [ ] **M5 — Configuration:** `ForgeConfigSpec` replaced (about 12 files).
@@ -46,3 +46,4 @@ Each milestone needs to be tested in a Fabric dev client by the maintainer befor
 - 2026-11-18: M0 scaffold on the `fabric` branch. Forge sources moved to `legacy/forge-src` (reference only). Loom build, `fabric.mod.json`, and entrypoint added. GitHub Actions `fabric-build` passes (compiles and builds the jar). Not yet launched in a dev client, so M0 is not ticked.
 - 2026-11-18: M1 (partial) compiles on Fabric. 17 Forge-free library classes plus the `HelperLib`-style dependents moved as needed; Forge/MCP names mapped to Yarn 1.16.5 names. Still in `legacy/` until their milestones: classes needing network (`ISyncable`, `UpdateEntityPacket`), config (`BloodValueLoader`), client GUI widgets (`ScrollableListWidget`), and the spawner logic. `WeightedRandomItem` rewritten without Minecraft dependencies. CI `fabric-build` is green (compile and jar build). Not launched in a dev client, so M1 is not ticked.
 - 2026-11-19: M2 (partial): test item `vampirism:test_item` registered through Fabric, with model, texture, and English name. CI builds now inject the commit hash into the jar, and the mod logs `Build commit: <hash>` on load. Local builds omit it. Not yet launched in a dev client, so M2 is not ticked.
+- 2026-11-19: M2 (partial): test block `vampirism:test_block` registered through Fabric, with block item, blockstate, models, texture, and English name. Launch confirmed the test item and `Build commit: c1a0c094` in the log. Not yet ticked.
